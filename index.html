@@ -10,8 +10,8 @@
         <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
         <style>
         #map {
-            width: 831px;
-            height: 742px;
+            width: 1620px;
+            height: 852px;
         }
         </style>
         <title></title>
@@ -31,34 +31,49 @@
         <script src="js/labels.js"></script>
         <script src="data/Parcels_1.js"></script>
         <script src="data/Buildings_2.js"></script>
-        <script src="data/Roads_3.js"></script>
-        <script src="data/LinnentownBoundary_4.js"></script>
+        <script src="data/LinnentownBoundary_3.js"></script>
+        <script src="data/Roads_4.js"></script>
         <script>
         var map = L.map('map', {
             zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[33.946369360675504,-83.384335],[33.951430639324485,-83.37866499999998]]);
+        }).fitBounds([[33.941055388235284,-83.39838696470588],[33.96121538823532,-83.36001181176465]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
-        var layer_Mapboxmap_0 = L.tileLayer('https://api.mapbox.com/styles/v1/kah574/ck6ckjcqm1exd1ilbv96yg0p8/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoia2FoNTc0IiwiYSI6ImNrNmNrYXl1aTFkOHgzamxqdTh5a3IyZGgifQ.NjYaziVQIvUX_ew5id6yqA', {
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             opacity: 1.0,
-            attribution: '',
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
             minZoom: 1,
             maxZoom: 28,
             minNativeZoom: 0,
-            maxNativeZoom: 18
+            maxNativeZoom: 19
         });
-        layer_Mapboxmap_0;
-        map.addLayer(layer_Mapboxmap_0);
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
         function pop_Parcels_1(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
-                        <td colspan="2">Parcel Number: ' + (feature.properties['parcel_num'] !== null ? Autolinker.link(feature.properties['parcel_num'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2">Parcel Section: ' + (feature.properties['parcel_sec'] !== null ? Autolinker.link(feature.properties['parcel_sec'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['cat'] !== null ? Autolinker.link(feature.properties['cat'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['parcel_num'] !== null ? Autolinker.link(feature.properties['parcel_num'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['parcel_sec'] !== null ? Autolinker.link(feature.properties['parcel_sec'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['parcel_section'] !== null ? Autolinker.link(feature.properties['parcel_section'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['layer'] !== null ? Autolinker.link(feature.properties['layer'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['path'] !== null ? Autolinker.link(feature.properties['path'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
                     </tr>\
                 </table>';
             layer.bindPopup(popupContent, {maxHeight: 400});
@@ -144,7 +159,7 @@
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(0,0,0,1.0)',
-                interactive: false,
+                interactive: true,
             }
         }
         map.createPane('pane_Buildings_2');
@@ -152,7 +167,7 @@
         map.getPane('pane_Buildings_2').style['mix-blend-mode'] = 'normal';
         var layer_Buildings_2 = new L.geoJson(json_Buildings_2, {
             attribution: '',
-            interactive: false,
+            interactive: true,
             dataVar: 'json_Buildings_2',
             layerName: 'layer_Buildings_2',
             pane: 'pane_Buildings_2',
@@ -161,13 +176,49 @@
         });
         bounds_group.addLayer(layer_Buildings_2);
         map.addLayer(layer_Buildings_2);
-        function pop_Roads_3(feature, layer) {
+        function pop_LinnentownBoundary_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_LinnentownBoundary_3_0() {
+            return {
+                pane: 'pane_LinnentownBoundary_3',
+                opacity: 1,
+                color: 'rgba(233,48,34,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 5.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_LinnentownBoundary_3');
+        map.getPane('pane_LinnentownBoundary_3').style.zIndex = 403;
+        map.getPane('pane_LinnentownBoundary_3').style['mix-blend-mode'] = 'normal';
+        var layer_LinnentownBoundary_3 = new L.geoJson(json_LinnentownBoundary_3, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_LinnentownBoundary_3',
+            layerName: 'layer_LinnentownBoundary_3',
+            pane: 'pane_LinnentownBoundary_3',
+            onEachFeature: pop_LinnentownBoundary_3,
+            style: style_LinnentownBoundary_3_0,
+        });
+        bounds_group.addLayer(layer_LinnentownBoundary_3);
+        map.addLayer(layer_LinnentownBoundary_3);
+        function pop_Roads_4(feature, layer) {
             var popupContent = '<table>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
                     </tr>\
                     <tr>\
-                        <td colspan="2"><strong>Street Name</strong><br />' + (feature.properties['Street Name'] !== null ? Autolinker.link(feature.properties['Street Name'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
+                        <td colspan="2">' + (feature.properties['Street Name'] !== null ? Autolinker.link(feature.properties['Street Name'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
                     </tr>\
                     <tr>\
                         <td colspan="2">' + (feature.properties['Source'] !== null ? Autolinker.link(feature.properties['Source'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
@@ -182,9 +233,9 @@
             layer.bindPopup(popupContent, {maxHeight: 400});
         }
 
-        function style_Roads_3_0() {
+        function style_Roads_4_0() {
             return {
-                pane: 'pane_Roads_3',
+                pane: 'pane_Roads_4',
                 opacity: 1,
                 color: 'rgba(44,30,21,1.0)',
                 dashArray: '',
@@ -192,12 +243,12 @@
                 lineJoin: 'bevel',
                 weight: 7.0,
                 fillOpacity: 0,
-                interactive: false,
+                interactive: true,
             }
         }
-        function style_Roads_3_1() {
+        function style_Roads_4_1() {
             return {
-                pane: 'pane_Roads_3',
+                pane: 'pane_Roads_4',
                 opacity: 1,
                 color: 'rgba(255,221,85,1.0)',
                 dashArray: '10,5',
@@ -205,84 +256,48 @@
                 lineJoin: 'bevel',
                 weight: 2.0,
                 fillOpacity: 0,
-                interactive: false,
+                interactive: true,
             }
         }
-        map.createPane('pane_Roads_3');
-        map.getPane('pane_Roads_3').style.zIndex = 403;
-        map.getPane('pane_Roads_3').style['mix-blend-mode'] = 'normal';
-        var layer_Roads_3 = new L.geoJson.multiStyle(json_Roads_3, {
+        map.createPane('pane_Roads_4');
+        map.getPane('pane_Roads_4').style.zIndex = 404;
+        map.getPane('pane_Roads_4').style['mix-blend-mode'] = 'normal';
+        var layer_Roads_4 = new L.geoJson.multiStyle(json_Roads_4, {
             attribution: '',
-            interactive: false,
-            dataVar: 'json_Roads_3',
-            layerName: 'layer_Roads_3',
-            pane: 'pane_Roads_3',
-            onEachFeature: pop_Roads_3,
-            styles: [style_Roads_3_0,style_Roads_3_1,]
+            interactive: true,
+            dataVar: 'json_Roads_4',
+            layerName: 'layer_Roads_4',
+            pane: 'pane_Roads_4',
+            onEachFeature: pop_Roads_4,
+            styles: [style_Roads_4_0,style_Roads_4_1,]
         });
-        bounds_group.addLayer(layer_Roads_3);
-        map.addLayer(layer_Roads_3);
-        function pop_LinnentownBoundary_4(feature, layer) {
-            var popupContent = '<table>\
-                    <tr>\
-                        <td colspan="2">' + (feature.properties['fid'] !== null ? Autolinker.link(feature.properties['fid'].toLocaleString(), {truncate: {length: 30, location: 'smart'}}) : '') + '</td>\
-                    </tr>\
-                </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
-        }
-
-        function style_LinnentownBoundary_4_0() {
-            return {
-                pane: 'pane_LinnentownBoundary_4',
-                opacity: 1,
-                color: 'rgba(233,48,34,1.0)',
-                dashArray: '',
-                lineCap: 'square',
-                lineJoin: 'bevel',
-                weight: 5.0,
-                fillOpacity: 0,
-                interactive: false,
-            }
-        }
-        map.createPane('pane_LinnentownBoundary_4');
-        map.getPane('pane_LinnentownBoundary_4').style.zIndex = 404;
-        map.getPane('pane_LinnentownBoundary_4').style['mix-blend-mode'] = 'normal';
-        var layer_LinnentownBoundary_4 = new L.geoJson(json_LinnentownBoundary_4, {
-            attribution: '',
-            interactive: false,
-            dataVar: 'json_LinnentownBoundary_4',
-            layerName: 'layer_LinnentownBoundary_4',
-            pane: 'pane_LinnentownBoundary_4',
-            onEachFeature: pop_LinnentownBoundary_4,
-            style: style_LinnentownBoundary_4_0,
-        });
-        bounds_group.addLayer(layer_LinnentownBoundary_4);
-        map.addLayer(layer_LinnentownBoundary_4);
+        bounds_group.addLayer(layer_Roads_4);
+        map.addLayer(layer_Roads_4);
         var baseMaps = {};
-        L.control.layers(baseMaps,{'<img src="legend/LinnentownBoundary_4.png" /> Linnentown Boundary': layer_LinnentownBoundary_4,'<img src="legend/Roads_3.png" /> Roads': layer_Roads_3,'<img src="legend/Buildings_2.png" /> Buildings': layer_Buildings_2,'<img src="legend/Parcels_1.png" /> Parcels': layer_Parcels_1,"Mapbox map": layer_Mapboxmap_0,}).addTo(map);
+        L.control.layers(baseMaps,{'<img src="legend/Roads_4.png" /> Roads': layer_Roads_4,'<img src="legend/LinnentownBoundary_3.png" /> Linnentown Boundary': layer_LinnentownBoundary_3,'<img src="legend/Buildings_2.png" /> Buildings': layer_Buildings_2,'<img src="legend/Parcels_1.png" /> Parcels': layer_Parcels_1,"OSM Standard": layer_OSMStandard_0,}).addTo(map);
         setBounds();
         var i = 0;
-        layer_Roads_3.eachLayer(function(layer) {
+        layer_Roads_4.eachLayer(function(layer) {
             var context = {
                 feature: layer.feature,
                 variables: {}
             };
-            layer.bindTooltip((layer.feature.properties['Street Name'] !== null?String('<div style="color: #006090; font-size: 15pt; font-family: \'Forte\', sans-serif;">' + layer.feature.properties['Street Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Roads_3'});
+            layer.bindTooltip((layer.feature.properties['Street Name'] !== null?String('<div style="color: #006090; font-size: 15pt; font-family: \'Forte\', sans-serif;">' + layer.feature.properties['Street Name']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_Roads_4'});
             labels.push(layer);
             totalMarkers += 1;
               layer.added = true;
               addLabel(layer, i);
               i++;
         });
-        resetLabels([layer_Parcels_1,layer_Buildings_2,layer_Roads_3]);
+        resetLabels([layer_Parcels_1,layer_Buildings_2,layer_Roads_4]);
         map.on("zoomend", function(){
-            resetLabels([layer_Parcels_1,layer_Buildings_2,layer_Roads_3]);
+            resetLabels([layer_Parcels_1,layer_Buildings_2,layer_Roads_4]);
         });
         map.on("layeradd", function(){
-            resetLabels([layer_Parcels_1,layer_Buildings_2,layer_Roads_3]);
+            resetLabels([layer_Parcels_1,layer_Buildings_2,layer_Roads_4]);
         });
         map.on("layerremove", function(){
-            resetLabels([layer_Parcels_1,layer_Buildings_2,layer_Roads_3]);
+            resetLabels([layer_Parcels_1,layer_Buildings_2,layer_Roads_4]);
         });
         </script>
     </body>
